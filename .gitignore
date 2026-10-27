@@ -1,0 +1,4 @@
+.wallet.key
+.env
+node_modules/
+dreamdex-bot-kit/

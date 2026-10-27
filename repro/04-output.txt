@@ -1,0 +1,24 @@
+run at 2026-10-27T04:50:34Z
+SDK version: 0.32.1
+exchange.has = {"fetchMarkets":true,"fetchOrderBook":true,"fetchTrades":true,"fetchOHLCV":true,"fetchBalance":true,"fetchOpenOrders":true,"getOrderHistoryPage":true,"getOrdersPage":true,"fetchMyTrades":true,"fetchStatus":true,"createOrder":true,"cancelOrder":true,"watchOrderBook":true,"watchTrades":true,"watchOrders":true,"watchMyTrades":true,"fetchPositions":true,"fetchFundingRate":true,"fetchFundingRateHistory":true,"watchPrice":true,"fetchPrice":true,"fetchPriceOHLCV":true}
+public verbs (per exchange.d.ts) implemented but absent from exchange.has: [
+  'setSigner',
+  'fetchTicker',
+  'fetchOrders',
+  'fetchPortfolioAnalytics',
+  'fetchDataStatus',
+  'watchUser',
+  'createStopOrder',
+  'fetchOpenStopOrders',
+  'cancelStopOrder'
+]
+has.fetchTicker = undefined | typeof exchange.fetchTicker = function
+has.fetchOrders = undefined | typeof exchange.fetchOrders = function
+has.createStopOrder = undefined | typeof exchange.createStopOrder = function
+[
+  'skip fetchTicker (venue says unsupported)',
+  'skip fetchOrders (venue says unsupported)',
+  'skip fetchOpenStopOrders (venue says unsupported)',
+  'skip watchUser (venue says unsupported)',
+  'skip fetchDataStatus (venue says unsupported)'
+]

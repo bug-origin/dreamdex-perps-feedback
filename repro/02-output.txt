@@ -1,0 +1,6 @@
+docs/EXCHANGE.md:240: // Hideki has no hosted indexer. Indexed reads need an indexer you operate.
+docs/reference/networks-and-endpoints.md:40: | Hideki testnet (50383)  | `https://hideki-dev.smk.somnia.host/v1/graphql` (development-grade)    | `SOMNIA_HIDEKI_TESTNET_ADDRESSES`                                          |
+indexer https://hideki-dev.smk.somnia.host/v1/graphql -> loadMarkets: 30 markets, 21 perps
+fetchTicker BTC/USDso:USDso last 79748.7 statsState ok
+fetchDataStatus indexerByChain[50383]: {"chainId":50383,"latestProcessedBlock":34244403,"blockHeight":34244403,"numEventsProcessed":505397220,"independentHead":{"chainId":50383,"blockNumber":"34244410","timestamp":"1793076622","observedAt":1793076622950},"processedBlockTimestamp":"1793076622","lagBlocks":"7","lagSeconds":"0","reportedLagBlocks":"0","observedAt":1793076623129}
+run at 2026-10-27T04:50:23.130Z
