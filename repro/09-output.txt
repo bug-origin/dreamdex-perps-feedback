@@ -1,0 +1,24 @@
+run at 2026-10-27T10:13:36.248Z
+spot/perp bases checked: 25 | fetchPrice() === null for: ["1000PEPE (1000PEPE/USDso:USDso)","LIT (LIT/USDso:USDso)","STT (STT/USDso)","VVV (VVV/USDso:USDso)","WBTC (WBTC/USDso)","WETH (WETH/USDso)","ZRO (ZRO/USDso:USDso)","BTCX (typo, not listed)"]
+
+[BTC]
+  fetchPrice : {"symbol":"BTC","price":79474.495,"ema":79473.7258340118,"datetime":"2026-10-27T10:13:40.000Z","info":"<LivePrice>"}
+  watchPrice : {"symbol":"BTC","price":79474.495,"ema":79473.7258340118,"datetime":"2026-10-27T10:13:40.000Z","info":"<LivePrice>"}  (125 ms)
+
+[1000PEPE]
+  fetchPrice : null
+  watchPrice : {"symbol":"1000PEPE","price":0,"ema":0,"datetime":"2026-10-27T10:13:41.131Z","info":null}  (110 ms)
+
+[LIT]
+  fetchPrice : null
+  watchPrice : {"symbol":"LIT","price":0,"ema":0,"datetime":"2026-10-27T10:13:41.610Z","info":null}  (110 ms)
+
+[STT]
+  fetchPrice : null
+  watchPrice : {"symbol":"STT","price":0,"ema":0,"datetime":"2026-10-27T10:13:41.820Z","info":null}  (113 ms)
+
+[BTCX]
+  fetchPrice : null
+  watchPrice : {"symbol":"BTCX","price":0,"ema":0,"datetime":"2026-10-27T10:13:42.039Z","info":null}  (104 ms)
+
+second watchPrice(1000PEPE): no resolution within 10000 ms (10001 ms)
