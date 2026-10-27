@@ -1,0 +1,5 @@
+fetchOpenStopOrders()        -> SignerRequiredError | operation: "fetchOrders" | @somnia-chain/markets-sdk: fetchOrders is authenticated — construct SomniaMarkets with a privateKey / account / walletClient
+getOrderHistoryPage()        -> SignerRequiredError | operation: "getOrdersPage" | @somnia-chain/markets-sdk: getOrdersPage is authenticated — construct SomniaMarkets with a privateKey / account / walletClient
+fetchOrders()  (control)     -> SignerRequiredError | operation: "fetchOrders" | @somnia-chain/markets-sdk: fetchOrders is authenticated — construct SomniaMarkets with a privateKey / account / walletClient
+fetchPositions()  (control)  -> SignerRequiredError | operation: "fetchPositions" | @somnia-chain/markets-sdk: fetchPositions is authenticated — construct SomniaMarkets with a privateKey / account / walletClient
+getOrderHistoryPage({limit:0}) -> InvalidInputError | @somnia-chain/markets-sdk: getOrdersPage: limit must be a positive safe integer

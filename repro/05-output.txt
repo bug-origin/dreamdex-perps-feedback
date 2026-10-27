@@ -1,0 +1,20 @@
+now    2026-10-27T09:59:41.793Z
+since  2026-10-27T06:59:00.000Z (1793084340000)
+
+fetchPriceOHLCV('BTC','1m', since, 5) bucket starts:
+   2026-10-27T09:55:00.000Z minutes after since: 176
+   2026-10-27T09:56:00.000Z minutes after since: 177
+   2026-10-27T09:57:00.000Z minutes after since: 178
+   2026-10-27T09:58:00.000Z minutes after since: 179
+   2026-10-27T09:59:00.000Z minutes after since: 180
+
+client.fetchPriceCandles('BTC','M1',{from: since, to: since+4m}) bucket starts:
+   2026-10-27T06:59:00.000Z
+   2026-10-27T07:00:00.000Z
+   2026-10-27T07:01:00.000Z
+   2026-10-27T07:02:00.000Z
+   2026-10-27T07:03:00.000Z
+
+ccxt forward-pagination loop (pages of 5, up to 3):
+  page 1: requested since 2026-10-27T06:59:00.000Z -> got 2026-10-27T09:55:00.000Z .. 2026-10-27T09:59:00.000Z
+  page 2: requested since 2026-10-27T10:00:00.000Z -> [] (loop ends; everything between the first since and the newest page was never returned)
