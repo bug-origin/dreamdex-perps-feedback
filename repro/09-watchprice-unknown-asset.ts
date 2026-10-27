@@ -47,5 +47,10 @@ const t1 = Date.now()
 try { console.log(`\nsecond watchPrice(${probe}):`, show(await withTimeout(ex.watchPrice(probe), 10000))) }
 catch (e: any) { console.log(`\nsecond watchPrice(${probe}): ${e.message} (${Date.now() - t1} ms)`) }
 
+// Health surfaces for the same assets: nothing flags them.
+const ds = await ex.fetchDataStatus()
+console.log("\nfetchDataStatus().status:", ds.status, "| prices:", JSON.stringify(ds.prices))
+console.log("client.getPriceStatus:", JSON.stringify(Object.fromEntries(["BTC", probe, "BTCX"].map((a) => [a, ex.client.getPriceStatus(a)]))))
+
 await ex.close()
 process.exit(0)

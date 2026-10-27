@@ -7,6 +7,7 @@ Area: SDK
 1. Build a `SomniaMarkets` on Hideki with `priceFeed: SOMNIA_TESTNET_PRICE_FEED`, as in `docs/PRICES.md`. Script: `repro/09-watchprice-unknown-asset.ts` (read-only).
 2. Call `fetchPrice(asset)` for the base asset of every spot/perp market `loadMarkets()` lists, plus a typo (`BTCX`).
 3. For `BTC` and for assets where `fetchPrice` returned `null`, call `watchPrice(asset)`. Then await `watchPrice` a second time on one of them.
+4. Read `fetchDataStatus().prices` and `client.getPriceStatus(asset)`.
 
 ## Expected
 `fetchPrice` is documented as returning `UnifiedPrice | null`, with `null` when "the feed has no observations yet". `watchPrice` reads the same feed. With no price available, it should say so: return `null`, throw (`InvalidInputError` for an asset the feed doesn't know), or keep waiting. It should not make up a price.
@@ -29,35 +30,38 @@ Cause: `src/unified/exchange.ts:4933-4950`. The `nextTick` mapper falls back to 
 ```
 The declared return type is `Promise<UnifiedPrice>` with no null case, and neither the JSDoc, `docs/EXCHANGE.md` nor `docs/PRICES.md` mentions a zero sentinel. `fetchPrice` (`exchange.ts:4956`) maps the same `null` to `null`.
 
-Impact: a bot that values positions, sizes orders or checks deviation against the index price with `watchPrice` gets `0` for a listed market, or for a mistyped asset name, with a current timestamp. For example, a "mark vs index deviation" guard computes 100% deviation, or a notional computes as 0. Nothing signals that the asset has no feed.
+Impact: a bot that values positions, sizes orders or checks deviation against the index price with `watchPrice` gets `0` for a listed market, or for a mistyped asset name, with a current timestamp. For example, a "mark vs index deviation" guard computes 100% deviation, or a notional computes as 0. The health surfaces do not reliably flag it either. In the same run, `client.getPriceStatus` reported `"live"` for the typo `BTCX`, and `fetchDataStatus().prices` reported `"hydrated"` for `LIT`, `STT` and `BTCX`, with an overall `status: "ok"`. Only `1000PEPE`, after the 10-second second await, had moved to `"error"`.
 
 ## Evidence
-`repro/09-output.txt` (Hideki + `SOMNIA_TESTNET_PRICE_FEED`, 2026-10-27 18:13 Asia/Shanghai):
+`repro/09-output.txt` (Hideki + `SOMNIA_TESTNET_PRICE_FEED`, 2026-10-27 18:15 Asia/Shanghai):
 ```
-run at 2026-10-27T10:13:36.248Z
+run at 2026-10-27T10:14:58.361Z
 spot/perp bases checked: 25 | fetchPrice() === null for: ["1000PEPE (1000PEPE/USDso:USDso)","LIT (LIT/USDso:USDso)","STT (STT/USDso)","VVV (VVV/USDso:USDso)","WBTC (WBTC/USDso)","WETH (WETH/USDso)","ZRO (ZRO/USDso:USDso)","BTCX (typo, not listed)"]
 
 [BTC]
-  fetchPrice : {"symbol":"BTC","price":79474.495,"ema":79473.7258340118,"datetime":"2026-10-27T10:13:40.000Z","info":"<LivePrice>"}
-  watchPrice : {"symbol":"BTC","price":79474.495,"ema":79473.7258340118,"datetime":"2026-10-27T10:13:40.000Z","info":"<LivePrice>"}  (125 ms)
+  fetchPrice : {"symbol":"BTC","price":79415.35,"ema":79411.7775872548,"datetime":"2026-10-27T10:15:02.000Z","info":"<LivePrice>"}
+  watchPrice : {"symbol":"BTC","price":79415.35,"ema":79411.7775872548,"datetime":"2026-10-27T10:15:02.000Z","info":"<LivePrice>"}  (127 ms)
 
 [1000PEPE]
   fetchPrice : null
-  watchPrice : {"symbol":"1000PEPE","price":0,"ema":0,"datetime":"2026-10-27T10:13:41.131Z","info":null}  (110 ms)
+  watchPrice : {"symbol":"1000PEPE","price":0,"ema":0,"datetime":"2026-10-27T10:15:03.239Z","info":null}  (107 ms)
 
 [LIT]
   fetchPrice : null
-  watchPrice : {"symbol":"LIT","price":0,"ema":0,"datetime":"2026-10-27T10:13:41.610Z","info":null}  (110 ms)
+  watchPrice : {"symbol":"LIT","price":0,"ema":0,"datetime":"2026-10-27T10:15:03.447Z","info":null}  (108 ms)
 
 [STT]
   fetchPrice : null
-  watchPrice : {"symbol":"STT","price":0,"ema":0,"datetime":"2026-10-27T10:13:41.820Z","info":null}  (113 ms)
+  watchPrice : {"symbol":"STT","price":0,"ema":0,"datetime":"2026-10-27T10:15:03.657Z","info":null}  (107 ms)
 
 [BTCX]
   fetchPrice : null
-  watchPrice : {"symbol":"BTCX","price":0,"ema":0,"datetime":"2026-10-27T10:13:42.039Z","info":null}  (104 ms)
+  watchPrice : {"symbol":"BTCX","price":0,"ema":0,"datetime":"2026-10-27T10:15:03.872Z","info":null}  (112 ms)
 
-second watchPrice(1000PEPE): no resolution within 10000 ms (10001 ms)
+second watchPrice(1000PEPE): no resolution within 10000 ms (10000 ms)
+
+fetchDataStatus().status: ok | prices: [{"asset":"BTC","health":"streaming"},{"asset":"1000PEPE","health":"error"},{"asset":"LIT","health":"hydrated"},{"asset":"STT","health":"hydrated"},{"asset":"BTCX","health":"hydrated"}]
+client.getPriceStatus: {"BTC":"live","1000PEPE":"error","BTCX":"live"}
 ```
 
 ## Suggested fix
