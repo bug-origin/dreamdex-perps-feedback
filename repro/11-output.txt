@@ -1,0 +1,6 @@
+BTC/USDso:USDso {"open":81387.9,"high":87839.9,"low":70000,"close":"<undefined>","last":77579.7,"change":-3808.199999999997,"percentage":-0.04679073916392974,"vwap":"<undefined>","bid":"<undefined>","ask":"<undefined>","baseVolume":822.3119,"quoteVolume":64382498.826056,"statsState":"ok"}
+  ccxt percentage = change/open*100 = -4.6791  | SDK percentage = -0.04679073916392974
+  'close' in ticker: false; last = 77579.7
+ETH/USDso:USDso {"open":2350.68,"high":2356.09,"low":2056.85,"close":"<undefined>","last":2227.99,"change":-122.69000000000005,"percentage":-0.052193407864958255,"vwap":"<undefined>","bid":"<undefined>","ask":"<undefined>","baseVolume":46556.4397,"quoteVolume":104564617.069167,"statsState":"ok"}
+  ccxt percentage = change/open*100 = -5.2193  | SDK percentage = -0.052193407864958255
+  'close' in ticker: false; last = 2227.99
