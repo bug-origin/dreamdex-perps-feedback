@@ -20,11 +20,12 @@ Every issue below was reproduced by me. The exact script and its captured output
 | [10](feedback/10-fetchohlcv-fetchtrades-since-ignored.md) | major | SDK | `fetchOHLCV` and `fetchTrades` treat `since` as a client-side post-filter on the newest `limit` rows (it is never sent to the indexer), so ccxt backfill of market candles and trades can't page forward |
 | [11](feedback/11-fetchticker-percentage-fraction-and-missing-close.md) | normal | SDK, docs | `fetchTicker.percentage` is a fraction (-0.047), not ccxt's percent (-4.7), and `close`/`bid`/`ask`/`vwap` are missing, despite EXCHANGE.md's "down to the field names" ccxt promise |
 | [12](feedback/12-fundingratehistory-documented-pagination-loop-never-terminates.md) | major | SDK, docs | `fetchFundingRateHistory`'s documented `since = last.timestamp + 1` loop never terminates: `since` is floored to seconds, so the last row is returned again on every page (forever at the tail, or with `limit=1`) |
+| [13](feedback/13-fetchbalance-missing-ccxt-free-used-total-maps.md) | normal | SDK, docs | `fetchBalance` has only per-currency entries, with no ccxt top-level `free`/`used`/`total`/`info` maps, so `balance.total.USDso` throws `TypeError` |
 
 ## Environment
 - `@somnia-chain/markets-sdk` 0.32.1 (npm latest at time of testing); Node v20.19.2
 - Somnia Tokyo testnet (Hideki 2, chain 50383): RPC `https://api.hideki2.infra.testnet.somnia.network`, indexer `https://hideki-dev.smk.somnia.host/v1/graphql`; price feed `SOMNIA_TESTNET_PRICE_FEED` (`https://price-feed.dev.oracle.somnia.host/v1/graphql`) for issues 05 and 09
-- All repros are read-only. No key or funds are needed, and no transactions were sent. Tx hashes cited are existing Hideki trades, used as evidence.
+- All repros are read-only. Issue 13 needs any testnet signer (`export PRIVATE_KEY=0x…`, unfunded is fine); no key is committed. No key or funds are needed, and no transactions were sent. Tx hashes cited are existing Hideki trades, used as evidence.
 
 ## Reproducing
 ```bash
@@ -42,4 +43,5 @@ npx tsx 09-watchprice-unknown-asset.ts  # issue 09
 npx tsx 10-fetchohlcv-fetchtrades-since.ts  # issue 10
 npx tsx 11-ticker-ccxt-fields.ts       # issue 11
 npx tsx 12-funding-history-cursor-stuck.ts  # issue 12
+PRIVATE_KEY=0x<throwaway testnet key> npx tsx 13-fetchbalance-ccxt-shape.ts  # issue 13 (needs any signer, no funds)
 ```

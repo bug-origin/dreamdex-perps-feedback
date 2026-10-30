@@ -1,0 +1,7 @@
+wallet: 0x14532294996feA672ff2e05BFFfEE055302526Db
+top-level keys: STT,tUSDC,ZRO,USDso,PUMP,LIT,1000PEPE,ZEC,WLD,TAO,NEAR,ADA,SUI,BNB,VVV,WBTC,LINK,ETH,XLM,SOL,BTC,HYPE,AVAX,XRP,WETH,DOGE
+typeof b.free / b.used / b.total / b.info: undefined undefined undefined undefined
+per-currency shape (USDso): {"free":0,"used":0,"total":0,"byChain":{"50383":{"free":0,"used":0,"total":0}}}
+balance.total.USDso -> throws TypeError: Cannot read properties of undefined (reading 'USDso')
+balance.free['USDso'] -> throws TypeError: Cannot read properties of undefined (reading 'USDso')
+Object.entries(balance.total) -> throws TypeError: Cannot convert undefined or null to object
