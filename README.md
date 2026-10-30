@@ -25,7 +25,7 @@ Every issue below was reproduced by me. The exact script and its captured output
 ## Environment
 - `@somnia-chain/markets-sdk` 0.32.1 (npm latest at time of testing); Node v20.19.2
 - Somnia Tokyo testnet (Hideki 2, chain 50383): RPC `https://api.hideki2.infra.testnet.somnia.network`, indexer `https://hideki-dev.smk.somnia.host/v1/graphql`; price feed `SOMNIA_TESTNET_PRICE_FEED` (`https://price-feed.dev.oracle.somnia.host/v1/graphql`) for issues 05 and 09
-- All repros are read-only. Issue 13 needs any testnet signer (`export PRIVATE_KEY=0x…`, unfunded is fine); no key is committed. No key or funds are needed, and no transactions were sent. Tx hashes cited are existing Hideki trades, used as evidence.
+- All repros are read-only and no transactions were sent. Issues 01–12 need no key; issue 13 needs any testnet signer (`export PRIVATE_KEY=0x…`, unfunded is fine). No key is committed. Tx hashes cited are existing Hideki trades, used as evidence.
 
 ## Reproducing
 ```bash
