@@ -17,6 +17,7 @@ Every issue below was reproduced by me. The exact script and its captured output
 | [07](feedback/07-fetchorders-since-is-post-filter-on-newest-page.md) | normal | SDK | `fetchOrders(ref, since, limit)` filters `since` client-side after fetching the newest `limit` orders, so it never returns the orders that start at `since` and can't page forward (unlike `fetchMyTrades`, which sends `since` to the indexer) |
 | [08](feedback/08-watchmytrades-side-undefined-on-spot-perp.md) | minor | SDK, docs | `watchMyTrades` returns `side: undefined` and no `txHash` on spot/perp fills, while `fetchMyTrades`/`watchTrades` resolve the side for the same fills |
 | [09](feedback/09-watchprice-fabricates-zero-price-for-unknown-asset.md) | normal | SDK | `watchPrice` resolves a made-up `{price: 0, ema: 0, timestamp: now}` for assets with no feed (7 listed Hideki markets, or a typo) where `fetchPrice` returns `null`, and the next await hangs |
+| [10](feedback/10-fetchohlcv-fetchtrades-since-ignored.md) | major | SDK | `fetchOHLCV` and `fetchTrades` treat `since` as a client-side post-filter on the newest `limit` rows (it is never sent to the indexer), so ccxt backfill of market candles and trades can't page forward |
 
 ## Environment
 - `@somnia-chain/markets-sdk` 0.32.1 (npm latest at time of testing); Node v20.19.2
@@ -36,4 +37,5 @@ npx tsx 06-signer-required-wrong-method.ts  # issue 06
 npx tsx 07-fetchorders-since.ts       # issue 07
 npx tsx 08-watchmytrades-side.ts      # issue 08
 npx tsx 09-watchprice-unknown-asset.ts  # issue 09
+npx tsx 10-fetchohlcv-fetchtrades-since.ts  # issue 10
 ```
